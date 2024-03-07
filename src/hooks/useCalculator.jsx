@@ -7,7 +7,8 @@ const initialState = {
 function reducer(state, action) {
   switch(action.type) {
     case 'number-click':
-      if(state.screen.includes(".") && action.payload === ".") {
+      const allItems = state.screen.split(" ")
+      if(allItems[allItems.length - 1].includes(".") && action.payload === ".") {
         return state
       }
       return {
