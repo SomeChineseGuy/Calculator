@@ -1,0 +1,19 @@
+.button-container {
+  display: flex;
+}
+
+.button-container__numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px;
+  grid-auto-flow: row-reverse;
+  flex-grow: 3;
+
+}
+
+.button-container__operators {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); 
+  gap: 20px;
+}
