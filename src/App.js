@@ -23,8 +23,6 @@ function App() {
   }, [dispatch])
   
 
-  
-
   return (
     <CalculatorContext.Provider value={{ state, dispatch }}>
       <div className="App"> 
