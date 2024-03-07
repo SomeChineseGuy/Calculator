@@ -5,63 +5,54 @@ const initialState = {
   equationCompleted: false
 }
 
-const solveArr = (arr) => {
+const evaluateExpression = (arr) => {
   const stack = [];
   let num = 0;
   let sign = '+';
   for (let i = 0; i < arr.length; i++) {
-      const char = arr[i];
-      if (!isNaN(parseFloat(char))) {
-          num = num * 10 + parseFloat(char);
+    const char = arr[i];
+    if (!isNaN(parseFloat(char))) {
+      num = num * 10 + parseFloat(char);
+    }
+    if ((isNaN(parseFloat(char)) && char !== ' ') || i === arr.length - 1) {
+      if (sign === '+') {
+        stack.push(num);
+      } else if (sign === '-') {
+        stack.push(-num);
+      } else if (sign === '*') {
+        stack.push(stack.pop() * num);
+      } else if (sign === '/') {
+        stack.push(stack.pop() / num);
       }
-      if ((isNaN(parseFloat(char)) && char !== ' ') || i === arr.length - 1) {
-          if (sign === '+') {
-              stack.push(num);
-          } else if (sign === '-') {
-              stack.push(-num);
-          } else if (sign === '*') {
-              stack.push(stack.pop() * num);
-          } else if (sign === '/') {
-              stack.push(Math.trunc(stack.pop() / num));
-          }
-          sign = char;
-          num = 0;
-      }
+      sign = char;
+      num = 0;
+    }
   }
   return stack.reduce((acc, val) => acc + val, 0);
 }
 
-function reducer(state, action) {
-  const allItems = state.screen.split(" ")
-  const lastCharacter = state.screen[state.screen.length - 1]
-  switch(action.type) {
-    case 'Backspace' :
-      if(state.equationCompleted) {
-        return {
-          ...state,
-          screen: "0",
-          equationCompleted: false
-        }
-      }
 
-      if(state.screen.length === 1) {
-        return {
-          ...state,
-          screen: "0"
-        }
+function reducer(state, action) {
+  const { screen } = state;
+  const allItems = screen.split(" ")
+  const lastCharacter = screen[screen.length - 1]
+  switch(action.type) {
+    case 'Backspace':
+      if (state.equationCompleted) {
+        return initialState;
       }
 
       if(lastCharacter === " ") {
         return {
           ...state,
-          screen: state.screen.slice(0, -3)
+          screen: screen.slice(0, -3)
         }
       }
-
       return {
         ...state,
-        screen: state.screen.slice(0, -1)
-      }
+        screen: screen.length === 1 ? "0" : screen.slice(0, -1)
+      };
+      
     case 'number-click':
       if(state.equationCompleted) {
         return {
@@ -74,26 +65,17 @@ function reducer(state, action) {
       if(allItems[allItems.length - 1].includes(".") && action.payload === ".") {
         return state
       }
+      
       return {
         ...state,
-        screen: state.screen === "0" ? `${action.payload}` : `${state.screen}${action.payload}`
+        screen: screen === "0" ? `${action.payload}` : `${screen}${action.payload}`
       }
     case 'operator-click':
-      if(state.equationCompleted) {
-        return {
-          ...state,
-          screen: "0",
-          equationCompleted: false
-        }
-      }
-      if(action.payload === "AC") {
-        return {
-          ...state,
-          screen: "0"
-        }
+      if(state.equationCompleted || action.payload === "AC") {
+        return initialState
       }
       
-      const updatedValue = state.screen.replace(/^(.*)(.)(.)/, `$1${action.payload}$3`);
+      const updatedValue = screen.replace(/^(.*)(.)(.)/, `$1${action.payload}$3`);
       if(lastCharacter === " " && action.payload !== "=") {
         return {
           ...state,
@@ -103,7 +85,7 @@ function reducer(state, action) {
       if(action.payload !== "=" && lastCharacter !== " ") {
         return {
           ...state,
-          screen: `${state.screen} ${action.payload} `
+          screen: `${screen} ${action.payload} `
         }
       }
 
@@ -111,14 +93,23 @@ function reducer(state, action) {
         return state
       }
 
-      if(action.payload === "=") {
-        return {
-          ...state,
-          screen: `${solveArr(allItems)}`,
-          equationCompleted: true
+      if (action.payload === "=") {
+        try {
+          const result = evaluateExpression(allItems);
+          return {
+            ...state,
+            screen: `${result}`,
+            equationCompleted: true
+          };
+        } catch (error) {
+          return {
+            ...state,
+            screen: "Error",
+            equationCompleted: true
+          };
         }
       }
-      return state
+      return state;
     default: 
       return state
   }
