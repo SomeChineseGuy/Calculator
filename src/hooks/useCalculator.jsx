@@ -21,11 +21,19 @@ function reducer(state, action) {
           screen: "0"
         }
       }
+      const lastCharacter = state.screen[state.screen.length - 1]
+      if(action.payload !== "=" && lastCharacter !== " ") {
+        return {
+          ...state,
+          screen: `${state.screen} ${action.payload} `
+        }
+      }
+
       
+
 
       return state
     default: 
-    console.log('default');
       return state
   }
 }
