@@ -6,12 +6,11 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 20px;
-  grid-auto-flow: row-reverse;
   flex-grow: 3;
-
 }
 
 .button-container__operators {
+  margin-left: 20px;
   flex-grow: 1;
   display: grid;
   grid-template-columns: repeat(1, 1fr); 

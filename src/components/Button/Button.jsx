@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import './Button.css'
+import CalculatorContext from "../../contexts/CalculatorContext";
 
 const Button = ({value}) => {
+  const {dispatch} = useContext(CalculatorContext)
+
+  const handleClick = () => {
+    const type = !isNaN(Number(value)) || value === "." ? 'number-click' : 'operator-click'
+    dispatch({payload: String(value), type})
+  }
+
   return (
-    <div>
-      <button className="btn">{value}</button>
-    </div>
+    <button onClick={handleClick} className="btn">{value}</button>
   )
 };
 

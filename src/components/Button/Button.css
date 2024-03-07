@@ -1,13 +1,13 @@
 .btn {
   padding: 10px;
-  border-radius: 50%;
   height: 20px;
-  width: 20px;
   box-sizing: content-box;
   border: 2px solid tomato;
   color: white;
   background-color: tomato;
   cursor: pointer;
+  flex-grow: 1;
+
   &:hover {
     pointer-events: auto;
     opacity: .8;

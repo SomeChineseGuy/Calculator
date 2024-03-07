@@ -1,12 +1,12 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import CalculatorContext from "../contexts/CalculatorContext";
 
 const Screen = () => {
-  const {screen} = useContext(CalculatorContext);
+  const {state} = useContext(CalculatorContext);
   
   return (
     <div>
-      <h1>{screen}</h1>
+      <h1>{state.screen}</h1>
     </div>
   )
 };

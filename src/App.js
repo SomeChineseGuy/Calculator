@@ -1,18 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
 import Calculator from './components/Calculator';
 import CalculatorContext from './contexts/CalculatorContext';
 import useCalculator from './hooks/useCalculator';
 
 function App() {
-  const {state} = useCalculator();
+
+  const [state, dispatch] = useCalculator();
 
   return (
-    <div className="App"> 
-      <CalculatorContext.Provider value={state}>
+    <CalculatorContext.Provider value={{ state, dispatch }}>
+      <div className="App"> 
         <Calculator />
-      </CalculatorContext.Provider>
-    </div>
+      </div>
+    </CalculatorContext.Provider>
   );
 }
 
