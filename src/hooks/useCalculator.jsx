@@ -15,7 +15,14 @@ function reducer(state, action) {
         screen: state.screen === "0" ? `${action.payload}` : `${state.screen}${action.payload}`
       }
     case 'operator-click':
-      console.log('operator');
+      if(action.payload === "AC") {
+        return {
+          ...state,
+          screen: "0"
+        }
+      }
+      
+
       return state
     default: 
     console.log('default');
