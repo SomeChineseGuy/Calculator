@@ -4,7 +4,7 @@ const initialState = {
   screen: "0"
 }
 
-const sumArr = (arr) => {
+const solveArr = (arr) => {
   const stack = [];
   let num = 0;
   let sign = '+';
@@ -32,7 +32,27 @@ const sumArr = (arr) => {
 
 function reducer(state, action) {
   const allItems = state.screen.split(" ")
+  const lastCharacter = state.screen[state.screen.length - 1]
   switch(action.type) {
+    case 'Backspace' :
+      if(state.screen.length === 1) {
+        return {
+          ...state,
+          screen: "0"
+        }
+      }
+
+      if(lastCharacter === " ") {
+        return {
+          ...state,
+          screen: state.screen.slice(0, -3)
+        }
+      }
+
+      return {
+        ...state,
+        screen: state.screen.slice(0, -1)
+      }
     case 'number-click':
       
       if(allItems[allItems.length - 1].includes(".") && action.payload === ".") {
@@ -49,7 +69,7 @@ function reducer(state, action) {
           screen: "0"
         }
       }
-      const lastCharacter = state.screen[state.screen.length - 1]
+      
       const updatedValue = state.screen.replace(/^(.*)(.)(.)/, `$1${action.payload}$3`);
       if(lastCharacter === " " && action.payload !== "=") {
         return {
@@ -71,7 +91,7 @@ function reducer(state, action) {
       if(action.payload === "=") {
         return {
           ...state,
-          screen: `${sumArr(allItems)}`
+          screen: `${solveArr(allItems)}`
         }
       }
 

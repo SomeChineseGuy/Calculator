@@ -13,6 +13,9 @@ function App() {
       if(!isNaN(Number(key)) || key === "." ) {
         dispatch({payload: String(key), type: 'number-click' })
       } 
+      if(key === "Backspace") {
+        dispatch({type: 'Backspace'})
+      }
     }
   
     window.addEventListener("keydown", getKeyDown)
