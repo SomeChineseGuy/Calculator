@@ -33,12 +33,12 @@ const evaluateExpression = (arr) => {
 
 
 function reducer(state, action) {
-  const { screen } = state;
+  const { screen, equationCompleted } = state;
   const allItems = screen.split(" ")
   const lastCharacter = screen[screen.length - 1]
   switch(action.type) {
     case 'Backspace':
-      if (state.equationCompleted) {
+      if (equationCompleted) {
         return initialState;
       }
 
@@ -54,7 +54,7 @@ function reducer(state, action) {
       };
       
     case 'number-click':
-      if(state.equationCompleted) {
+      if(equationCompleted) {
         return {
           ...state,
           screen: `${action.payload}`,
@@ -71,7 +71,7 @@ function reducer(state, action) {
         screen: screen === "0" ? `${action.payload}` : `${screen}${action.payload}`
       }
     case 'operator-click':
-      if(state.equationCompleted || action.payload === "AC") {
+      if(equationCompleted || action.payload === "AC") {
         return initialState
       }
       
