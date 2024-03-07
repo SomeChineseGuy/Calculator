@@ -10,6 +10,9 @@ function App() {
   useEffect(() => {
     const getKeyDown = (e) => {
       const key = e.key;
+      if(key === "Enter") {
+        dispatch({payload: "=", type: 'operator-click'})
+      }
       if(!isNaN(Number(key)) || key === "." ) {
         dispatch({payload: String(key), type: 'number-click' })
       } 

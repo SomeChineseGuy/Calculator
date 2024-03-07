@@ -1,7 +1,8 @@
 import { useReducer } from 'react';
 
 const initialState = {
-  screen: "0"
+  screen: "0",
+  equationCompleted: false
 }
 
 const solveArr = (arr) => {
@@ -35,6 +36,14 @@ function reducer(state, action) {
   const lastCharacter = state.screen[state.screen.length - 1]
   switch(action.type) {
     case 'Backspace' :
+      if(state.equationCompleted) {
+        return {
+          ...state,
+          screen: "0",
+          equationCompleted: false
+        }
+      }
+
       if(state.screen.length === 1) {
         return {
           ...state,
@@ -54,6 +63,13 @@ function reducer(state, action) {
         screen: state.screen.slice(0, -1)
       }
     case 'number-click':
+      if(state.equationCompleted) {
+        return {
+          ...state,
+          screen: `${action.payload}`,
+          equationCompleted: false
+        }
+      }
       
       if(allItems[allItems.length - 1].includes(".") && action.payload === ".") {
         return state
@@ -63,6 +79,13 @@ function reducer(state, action) {
         screen: state.screen === "0" ? `${action.payload}` : `${state.screen}${action.payload}`
       }
     case 'operator-click':
+      if(state.equationCompleted) {
+        return {
+          ...state,
+          screen: "0",
+          equationCompleted: false
+        }
+      }
       if(action.payload === "AC") {
         return {
           ...state,
@@ -91,10 +114,10 @@ function reducer(state, action) {
       if(action.payload === "=") {
         return {
           ...state,
-          screen: `${solveArr(allItems)}`
+          screen: `${solveArr(allItems)}`,
+          equationCompleted: true
         }
       }
-
       return state
     default: 
       return state
