@@ -21,7 +21,7 @@ const displayOperators = () => {
 
 const ButtonContainer = () => {
   return (
-    
+    <>
     <div className="button-container">
       <div className="button-container__numbers">
         {displayNumers()}
@@ -30,6 +30,10 @@ const ButtonContainer = () => {
         {displayOperators()}
       </div>
     </div>
+    <div className="AC-container">
+      <Button value="AC" />
+    </div>
+    </>
   )
 };
 

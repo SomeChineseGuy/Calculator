@@ -19,3 +19,9 @@
     opacity: .9 ;
   }
 }
+
+.AC-container .btn { 
+  background-color: yellow;
+  border: 2px solid yellow;
+  color: tomato
+}

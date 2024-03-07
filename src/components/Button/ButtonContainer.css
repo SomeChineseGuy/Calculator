@@ -16,3 +16,9 @@
   grid-template-columns: repeat(1, 1fr); 
   gap: 20px;
 }
+
+.AC-container {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 20px;
+}
