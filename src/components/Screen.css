@@ -1,0 +1,11 @@
+.screen-container {
+  background-color: gray;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.screen {
+  color: white;
+  margin: 0;
+}

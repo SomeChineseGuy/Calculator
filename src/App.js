@@ -1,11 +1,29 @@
+import { useEffect } from 'react';
 import './App.css';
 import Calculator from './components/Calculator';
 import CalculatorContext from './contexts/CalculatorContext';
 import useCalculator from './hooks/useCalculator';
 
 function App() {
-
   const [state, dispatch] = useCalculator();
+
+  useEffect(() => {
+    const getKeyDown = (e) => {
+      const key = e.key;
+      if(!isNaN(Number(key)) || key === "." ) {
+        dispatch({payload: String(key), type: 'number-click' })
+      } 
+    }
+  
+    window.addEventListener("keydown", getKeyDown)
+    return () => {
+      window.removeEventListener("keydown",getKeyDown)
+    }
+    
+  }, [dispatch])
+  
+
+  
 
   return (
     <CalculatorContext.Provider value={{ state, dispatch }}>
