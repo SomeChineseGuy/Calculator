@@ -15,7 +15,7 @@ const displayNumers = () => {
 };
 
 const displayOperators = () => {
-  const operators = ["/", "*", "+", "="]
+  const operators = ["/", "*", "+", "-"]
   return operators.map((operator) => <Button key={operator} value={operator} /> )
 }
 

@@ -22,6 +22,13 @@ function reducer(state, action) {
         }
       }
       const lastCharacter = state.screen[state.screen.length - 1]
+      const updatedValue = state.screen.replace(/^(.*)(.)(.)/, `$1${action.payload}$3`);
+      if(lastCharacter === " " && action.payload !== "=") {
+        return {
+          ...state,
+          screen: updatedValue
+        }
+      }
       if(action.payload !== "=" && lastCharacter !== " ") {
         return {
           ...state,
