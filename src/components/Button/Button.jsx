@@ -1,9 +1,10 @@
 import React from "react";
+import './Button.css'
 
 const Button = ({value}) => {
   return (
     <div>
-      <p>{value}</p>
+      <button className="btn">{value}</button>
     </div>
   )
 };

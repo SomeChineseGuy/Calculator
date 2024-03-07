@@ -10,7 +10,7 @@ const displayNumers = () => {
     [1, 2, 3],
     [0, ".", "="]
   ];
-
+  
   return layout.map((item) => item.map(single => <Button key={single} value={single} />))
 };
 
